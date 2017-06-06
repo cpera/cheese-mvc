@@ -60,13 +60,17 @@ public class CheeseController {
         model.addAttribute("cheese", c);
         return "cheese/edit";
     }
-    @RequestMapping(value = "edit", method = RequestMethod.POST)
-    public String processEditForm(int cheeseId, String name, String description) {
+    @RequestMapping(value = "edit/{cheeseId}", method = RequestMethod.POST)
+    public String processEditForm(Model model, int cheeseId, String name, String description) {
         Cheese c = CheeseData.getById(cheeseId);
         c.setName(name);
         c.setDescription(description);
         //model.addAttribute("cheese", c);
-        return "cheese/edit";
+        model.addAttribute("cheeses", CheeseData.getAll());
+        model.addAttribute("title", "My Cheeses");
+
+        return "cheese/index";
+
     }
 
 }
